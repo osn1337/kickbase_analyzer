@@ -112,7 +112,7 @@ button:hover { background-color: var(--primary-hover); }
 table { 
     width: 100%; 
     border-collapse: collapse; 
-    min-width: 600px; /* Wird auf dem Smartphone überschrieben */
+    min-width: 600px; 
 }
 th, td { 
     padding: 0.75rem; 
@@ -143,10 +143,10 @@ input[type="checkbox"] { transform: scale(1.3); cursor: pointer; }
 /* Responsive Smartphone Layout */
 @media (max-width: 768px) {
     body {
-        padding: 0.5rem;
+        padding: 0.5rem; 
     }
     .card {
-        padding: 0.75rem;
+        padding: 0.75rem; 
     }
     
     .budget-panel {
@@ -164,15 +164,15 @@ input[type="checkbox"] { transform: scale(1.3); cursor: pointer; }
     h2 { font-size: 1.25rem; }
 
     table {
-        min-width: 100%;
-        font-size: 0.7rem;
+        min-width: 100%; 
+        font-size: 0.7rem; 
     }
     th, td {
-        padding: 0.4rem 0.2rem;
+        padding: 0.4rem 0.2rem; 
         word-wrap: break-word;
     }
     input[type="checkbox"] {
-        transform: scale(1.1);
+        transform: scale(1.1); 
     }
     
     td:first-child {
@@ -182,7 +182,7 @@ input[type="checkbox"] { transform: scale(1.3); cursor: pointer; }
         text-overflow: ellipsis;
     }
 
-    /* Auf Smartphones: Kurze Namen zeigen, lange ausblenden */
-    .team-full { display: none; }
-    .team-short { display: inline; }
+    /* Auf Smartphones: Kurze Namen erzwingen, lange ausblenden */
+    .team-full { display: none !important; }
+    .team-short { display: inline !important; }
 }
