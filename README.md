@@ -8,7 +8,7 @@ Damit deine Login-Daten komplett privat bleiben und nicht über fremde Server fl
 
 Klicke einfach auf den folgenden Button, um dir deine eigene private Instanz bei Vercel zu erstellen:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/osn1337/KBAnalyzer)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/osn1337/kickbase_analyzer)
 
 ### 🛠 Wie funktioniert das? (Schritt-für-Schritt)
 1. Klicke auf den blauen Deploy-Button oben.
