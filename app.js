@@ -20,32 +20,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const POSITIONS = { 1: "Tor", 2: "Abwehr", 3: "Mittelfeld", 4: "Sturm" };
 
+    // Das erweiterte Mapping mit Full und Short
     const TEAM_MAPPING = {
-        "1": "FC Augsburg",
-        "2": "FC Bayern München",
-        "3": "Borussia Dortmund",
-        "4": "Eintracht Frankfurt",
-        "5": "SC Freiburg",
-        "6": "Hamburger SV",
-        "7": "Bayer 04 Leverkusen",
-        "8": "FC Schalke 04",
-        "9": "VfB Stuttgart",
-        "10": "SV Werder Bremen",
-        "11": "VfL Wolfsburg",
-        "13": "FC Augsburg",
-        "14": "TSG Hoffenheim",
-        "15": "Bor. Mönchengladbach",
-        "18": "FSV Mainz 05",
-        "28": "1. FC Köln",
-        "29": "SC Paderborn 07",
-        "39": "FC St. Pauli",
-        "40": "1. FC Union Berlin",
-        "43": "RB Leipzig",
-        "50": "1. FC Heidenheim"
+        "1": { full: "FC Augsburg", short: "FCA" },
+        "2": { full: "FC Bayern München", short: "FCB" },
+        "3": { full: "Borussia Dortmund", short: "BVB" },
+        "4": { full: "Eintracht Frankfurt", short: "SGE" },
+        "5": { full: "SC Freiburg", short: "SCF" },
+        "6": { full: "Hamburger SV", short: "HSV" },
+        "7": { full: "Bayer 04 Leverkusen", short: "B04" },
+        "8": { full: "FC Schalke 04", short: "S04" },
+        "9": { full: "VfB Stuttgart", short: "VFB" },
+        "10": { full: "SV Werder Bremen", short: "SVW" },
+        "11": { full: "VfL Wolfsburg", short: "WOB" },
+        "13": { full: "FC Augsburg", short: "FCA" },
+        "14": { full: "TSG Hoffenheim", short: "TSG" },
+        "15": { full: "Bor. Mönchengladbach", short: "BMG" },
+        "18": { full: "FSV Mainz 05", short: "M05" },
+        "28": { full: "1. FC Köln", short: "KOE" },
+        "29": { full: "SC Paderborn 07", short: "SCP" },
+        "39": { full: "FC St. Pauli", short: "STP" },
+        "40": { full: "1. FC Union Berlin", short: "FCU" },
+        "41": { full: "VfL Bochum", short: "BOC" },
+        "42": { full: "Holstein Kiel", short: "KIE" },
+        "43": { full: "RB Leipzig", short: "RBL" },
+        "50": { full: "1. FC Heidenheim", short: "FCH" }
     };
 
-    function getTeamName(tid) {
-        return TEAM_MAPPING[String(tid)] || ("Team-ID " + tid);
+    function getTeamData(tid) {
+        return TEAM_MAPPING[String(tid)] || { full: "Team-ID " + tid, short: "T" + tid };
     }
 
     // --- Events ---
@@ -96,7 +99,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const options = { method, headers };
         if (body) options.body = JSON.stringify(body);
 
-        // Hier passiert die Magie: Wir rufen unseren eigenen Vercel-Proxy auf
         const proxyUrl = `/api/kickbase?endpoint=${endpoint}`;
         
         const response = await fetch(proxyUrl, options);
@@ -210,10 +212,14 @@ document.addEventListener("DOMContentLoaded", () => {
             posPlayers.forEach(p => {
                 const tr = document.createElement("tr");
                 const isChecked = sellSet.has(p.id);
+                const team = getTeamData(p.teamId);
                 
                 tr.innerHTML = `
                     <td>${p.name}</td>
-                    <td>${getTeamName(p.teamId)}</td>
+                    <td>
+                        <span class="team-full">${team.full}</span>
+                        <span class="team-short">${team.short}</span>
+                    </td>
                     <td class="text-right muted">${formatCurrency(p.buyPrice)}</td>
                     <td class="text-right font-bold">${formatCurrency(p.marketValue)}</td>
                     <td class="text-center checkbox-cell"><input type="checkbox" data-id="${p.id}" ${isChecked ? "checked" : ""}></td>
