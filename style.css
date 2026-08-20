@@ -1,0 +1,183 @@
+:root {
+    --bg-color: #f4f7f6;
+    --card-bg: #ffffff;
+    --primary-color: #27ae60;
+    --primary-hover: #219150;
+    --text-color: #333333;
+    --border-color: #e0e0e0;
+    --positive-color: #00b050;
+    --negative-color: #ff0000;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+    margin: 0;
+}
+
+.container {
+    width: 100%;
+    max-width: 1000px;
+}
+
+.card {
+    background-color: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-bottom: 1.5rem;
+}
+
+h1, h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.text-sm { font-size: 0.85rem; color: #666; }
+.font-bold { font-weight: bold; color: var(--text-color); }
+.text-right { text-align: right; }
+.text-center { text-align: center; }
+.mt-4 { margin-top: 1rem; }
+
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+input[type="email"], input[type="password"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover { background-color: var(--primary-hover); }
+.secondary-btn { background-color: #7f8c8d; }
+.secondary-btn:hover { background-color: #6c7a7d; }
+.button-group button { margin-bottom: 0.5rem; }
+
+.hidden { display: none !important; }
+.error { color: var(--negative-color); margin-top: 1rem; text-align: center; }
+
+/* Budget Panel */
+.budget-panel {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.budget-box {
+    flex: 1;
+    text-align: center;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+
+.budget-box .label { display: block; font-weight: bold; font-size: 0.9rem; margin-bottom: 0.5rem; }
+.budget-box .value { display: block; font-size: 1.25rem; font-weight: bold; }
+.val-positive { color: var(--positive-color); }
+.val-negative { color: var(--negative-color); }
+
+/* Table Styles - Desktop Basis */
+.table-container { 
+    overflow-x: auto; 
+    -webkit-overflow-scrolling: touch; 
+}
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    min-width: 600px; /* Wird auf dem Smartphone überschrieben */
+}
+th, td { 
+    padding: 0.75rem; 
+    border-bottom: 1px solid var(--border-color); 
+    text-align: left; 
+}
+th { 
+    background-color: #d9d9d9; 
+    font-weight: bold; 
+}
+.pos-header td { 
+    font-weight: bold; 
+    background-color: #f0f0f0; 
+    padding-top: 1rem; 
+}
+.footer-row td { 
+    font-weight: bold; 
+    border-top: 2px solid #ccc; 
+}
+.checkbox-cell { cursor: pointer; }
+input[type="checkbox"] { transform: scale(1.3); cursor: pointer; }
+.muted { color: #bfbfbf; }
+
+/* Responsive Smartphone Layout */
+@media (max-width: 768px) {
+    body {
+        padding: 0.5rem; /* Weniger Rand außen */
+    }
+    .card {
+        padding: 0.75rem; /* Weniger Padding im Container */
+    }
+    
+    /* Budget anpassen */
+    .budget-panel {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .budget-box {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0.75rem;
+    }
+    .budget-box .value { font-size: 1.1rem; }
+    
+    h1 { font-size: 1.5rem; }
+    h2 { font-size: 1.25rem; }
+
+    /* Tabelle stark komprimieren */
+    table {
+        min-width: 100%; /* Zwangsscrollen aufheben */
+        font-size: 0.7rem; /* Schriftgröße deutlich reduzieren */
+    }
+    th, td {
+        padding: 0.4rem 0.2rem; /* Weißraum in den Zellen minimieren */
+        word-wrap: break-word;
+    }
+    input[type="checkbox"] {
+        transform: scale(1.1); /* Checkbox etwas kleiner */
+    }
+    
+    /* Spielernamen abschneiden, wenn sie zu lang sind (z.B. Konstantinos Koulierakis) */
+    td:first-child {
+        max-width: 75px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

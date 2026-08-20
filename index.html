@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kickbase Analyzer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Login UI -->
+        <div id="login-section" class="card">
+            <h1>Kickbase Login</h1>
+            <div class="form-group">
+                <label for="email">E-Mail</label>
+                <input type="email" id="email" placeholder="name@beispiel.de" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Passwort</label>
+                <input type="password" id="password" placeholder="Passwort eingeben" required>
+            </div>
+            <button id="fetch-data-btn">Daten abrufen</button>
+            <p id="error-message" class="error hidden"></p>
+        </div>
+
+        <!-- League Selection (Hidden initially) -->
+        <div id="league-section" class="card hidden">
+            <h2>Liga auswählen</h2>
+            <div id="league-buttons" class="button-group"></div>
+        </div>
+
+        <!-- Dashboard UI (Hidden until successful data fetch) -->
+        <div id="dashboard-section" class="hidden">
+            <div class="header-info card">
+                <h2 id="league-name">Kaderübersicht</h2>
+                <p id="last-update" class="text-sm"></p>
+                <p id="next-match" class="text-sm font-bold"></p>
+            </div>
+
+            <!-- Finanzen / Budget -->
+            <div class="budget-panel card">
+                <div class="budget-box">
+                    <span class="label">Kontostand</span>
+                    <span id="budget-current" class="value">0 €</span>
+                </div>
+                <div class="budget-box">
+                    <span class="label">Nach Transfers</span>
+                    <span id="budget-transfers" class="value">0 €</span>
+                </div>
+                <div class="budget-box">
+                    <span class="label">Nach Boni</span>
+                    <span id="budget-bonus" class="value">0 €</span>
+                </div>
+            </div>
+
+            <!-- Kader Tabelle -->
+            <div class="table-container card">
+                <table id="squad-table">
+                    <thead>
+                        <tr>
+                            <th>Spieler</th>
+                            <th>Team</th>
+                            <th class="text-right">Kaufpreis</th>
+                            <th class="text-right">Marktwert</th>
+                            <th class="text-center">Verkauf</th>
+                            <th class="text-right">Gewinn/Verlust</th>
+                        </tr>
+                    </thead>
+                    <tbody id="squad-body">
+                        <!-- Wird via JS befüllt -->
+                    </tbody>
+                    <tfoot id="squad-footer">
+                        <!-- Zusammenfassung via JS -->
+                    </tfoot>
+                </table>
+            </div>
+            <button id="logout-btn" class="secondary-btn mt-4">Zurück zum Login</button>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
