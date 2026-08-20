@@ -136,16 +136,19 @@ th {
 input[type="checkbox"] { transform: scale(1.3); cursor: pointer; }
 .muted { color: #bfbfbf; }
 
+/* Responsive Klassen für die Teamnamen */
+.team-short { display: none; }
+.team-full { display: inline; }
+
 /* Responsive Smartphone Layout */
 @media (max-width: 768px) {
     body {
-        padding: 0.5rem; /* Weniger Rand außen */
+        padding: 0.5rem;
     }
     .card {
-        padding: 0.75rem; /* Weniger Padding im Container */
+        padding: 0.75rem;
     }
     
-    /* Budget anpassen */
     .budget-panel {
         flex-direction: column;
         gap: 0.5rem;
@@ -160,24 +163,26 @@ input[type="checkbox"] { transform: scale(1.3); cursor: pointer; }
     h1 { font-size: 1.5rem; }
     h2 { font-size: 1.25rem; }
 
-    /* Tabelle stark komprimieren */
     table {
-        min-width: 100%; /* Zwangsscrollen aufheben */
-        font-size: 0.7rem; /* Schriftgröße deutlich reduzieren */
+        min-width: 100%;
+        font-size: 0.7rem;
     }
     th, td {
-        padding: 0.4rem 0.2rem; /* Weißraum in den Zellen minimieren */
+        padding: 0.4rem 0.2rem;
         word-wrap: break-word;
     }
     input[type="checkbox"] {
-        transform: scale(1.1); /* Checkbox etwas kleiner */
+        transform: scale(1.1);
     }
     
-    /* Spielernamen abschneiden, wenn sie zu lang sind (z.B. Konstantinos Koulierakis) */
     td:first-child {
         max-width: 75px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
+
+    /* Auf Smartphones: Kurze Namen zeigen, lange ausblenden */
+    .team-full { display: none; }
+    .team-short { display: inline; }
 }
