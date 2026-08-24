@@ -1,4 +1,5 @@
 :root {
+    /* Helles Standard-Theme (Light Mode) */
     --bg-color: #f4f7f6;
     --card-bg: #ffffff;
     --primary-color: #27ae60;
@@ -7,6 +8,34 @@
     --border-color: #e0e0e0;
     --positive-color: #00b050;
     --negative-color: #ff0000;
+    
+    /* Spezifische UI-Elemente */
+    --budget-box-bg: #f8f9fa;
+    --table-header-bg: #d9d9d9;
+    --table-pos-header-bg: #f0f0f0;
+    --footer-border: #cccccc;
+    --muted-text: #bfbfbf;
+}
+
+/* Automatischer Dark Mode (Reagiert auf die Systemeinstellungen des Handys) */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #121212;
+        --card-bg: #1e1e1e;
+        --primary-color: #2ecc71; /* Etwas leuchtenderes Grün für besseren Kontrast */
+        --primary-hover: #27ae60;
+        --text-color: #e0e0e0;
+        --border-color: #333333;
+        --positive-color: #4caf50;
+        --negative-color: #ff5252;
+        
+        /* Spezifische UI-Elemente für Dark Mode */
+        --budget-box-bg: #2a2a2a;
+        --table-header-bg: #2c2c2c;
+        --table-pos-header-bg: #252525;
+        --footer-border: #555555;
+        --muted-text: #888888;
+    }
 }
 
 body {
@@ -17,6 +46,7 @@ body {
     justify-content: center;
     padding: 2rem;
     margin: 0;
+    transition: background-color 0.3s, color 0.3s; /* Weicher Übergang beim Wechsel */
 }
 
 .container {
@@ -30,6 +60,7 @@ body {
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     margin-bottom: 1.5rem;
+    transition: background-color 0.3s;
 }
 
 h1, h2 {
@@ -38,7 +69,7 @@ h1, h2 {
     text-align: center;
 }
 
-.text-sm { font-size: 0.85rem; color: #666; }
+.text-sm { font-size: 0.85rem; color: var(--muted-text); }
 .font-bold { font-weight: bold; color: var(--text-color); }
 .text-right { text-align: right; }
 .text-center { text-align: center; }
@@ -60,13 +91,15 @@ input[type="email"], input[type="password"] {
     border: 1px solid var(--border-color);
     border-radius: 4px;
     box-sizing: border-box;
+    background-color: var(--bg-color); /* Passt sich im Dark Mode an */
+    color: var(--text-color);
 }
 
 button {
     width: 100%;
     padding: 0.75rem;
     background-color: var(--primary-color);
-    color: white;
+    color: white; /* Bleibt immer weiß wegen Kontrast zum grünen Button */
     border: none;
     border-radius: 4px;
     font-size: 1rem;
@@ -94,9 +127,10 @@ button:hover { background-color: var(--primary-hover); }
     flex: 1;
     text-align: center;
     padding: 1rem;
-    background: #f8f9fa;
+    background: var(--budget-box-bg);
     border-radius: 6px;
     border: 1px solid var(--border-color);
+    transition: background-color 0.3s;
 }
 
 .budget-box .label { display: block; font-weight: bold; font-size: 0.9rem; margin-bottom: 0.5rem; }
@@ -120,21 +154,23 @@ th, td {
     text-align: left; 
 }
 th { 
-    background-color: #d9d9d9; 
+    background-color: var(--table-header-bg); 
     font-weight: bold; 
+    transition: background-color 0.3s;
 }
 .pos-header td { 
     font-weight: bold; 
-    background-color: #f0f0f0; 
+    background-color: var(--table-pos-header-bg); 
     padding-top: 1rem; 
+    transition: background-color 0.3s;
 }
 .footer-row td { 
     font-weight: bold; 
-    border-top: 2px solid #ccc; 
+    border-top: 2px solid var(--footer-border); 
 }
 .checkbox-cell { cursor: pointer; }
 input[type="checkbox"] { transform: scale(1.3); cursor: pointer; }
-.muted { color: #bfbfbf; }
+.muted { color: var(--muted-text); }
 
 /* Responsive Klassen für die Teamnamen */
 .team-short { display: none; }
