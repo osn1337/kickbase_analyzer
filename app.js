@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const nextMatchLabel = document.getElementById("next-match");
     
     // --- State ---
-    let token = "";
+    let token = localStorage.getItem("kb_token") || "";
     let currentBudget = 0;
     let playersData = [];
     let sellSet = new Set();
@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const POSITIONS = { 1: "Tor", 2: "Abwehr", 3: "Mittelfeld", 4: "Sturm" };
 
-    // Das erweiterte Mapping mit Full und Short
     const TEAM_MAPPING = {
         "1": { full: "FC Augsburg", short: "FCA" },
         "2": { full: "FC Bayern München", short: "FCB" },
@@ -44,12 +43,22 @@ document.addEventListener("DOMContentLoaded", () => {
         "41": { full: "VfL Bochum", short: "BOC" },
         "42": { full: "Holstein Kiel", short: "KIE" },
         "43": { full: "RB Leipzig", short: "RBL" },
-        "50": { full: "1. FC Heidenheim", short: "FCH" }, 
-        "77": { full: "SV Elversberg", short: "ELV" }        
+        "50": { full: "1. FC Heidenheim", short: "FCH" }
     };
 
     function getTeamData(tid) {
         return TEAM_MAPPING[String(tid)] || { full: "Team-ID " + tid, short: "T" + tid };
+    }
+
+    // --- Init ---
+    const savedEmail = localStorage.getItem("kb_email");
+    if (savedEmail) {
+        emailInput.value = savedEmail;
+    }
+
+    // Wenn ein Token im Storage liegt, direkt den Auto-Login versuchen
+    if (token) {
+        performAutoLogin();
     }
 
     // --- Events ---
@@ -66,18 +75,13 @@ document.addEventListener("DOMContentLoaded", () => {
             const loginRes = await apiCall("/user/login", "POST", { em: email, pass: password });
             token = loginRes.tkn;
             
-            fetchBtn.textContent = "Lade Ligen...";
-            const leaguesRes = await apiCall("/leagues", "GET");
-            const leagues = leaguesRes.lins || [];
+            // Token und E-Mail für die nächste Session speichern
+            localStorage.setItem("kb_token", token);
+            localStorage.setItem("kb_email", email);
             
-            const validLeagues = leagues.filter(l => !l.n.toLowerCase().includes("challenge"));
-            
-            if (validLeagues.length === 0) throw new Error("Keine passenden Ligen gefunden.");
-            
-            showLeagueSelection(validLeagues);
+            await loadLeagues();
         } catch (err) {
             showError(err.message);
-        } finally {
             fetchBtn.textContent = "Daten abrufen";
             fetchBtn.disabled = false;
         }
@@ -85,11 +89,42 @@ document.addEventListener("DOMContentLoaded", () => {
 
     logoutBtn.addEventListener("click", () => {
         token = "";
+        localStorage.removeItem("kb_token"); // Token beim Logout vernichten
         dashboardSection.classList.add("hidden");
         loginSection.classList.remove("hidden");
+        fetchBtn.textContent = "Daten abrufen";
+        fetchBtn.disabled = false;
     });
 
     // --- Core Functions ---
+    async function performAutoLogin() {
+        fetchBtn.textContent = "Stelle Session wieder her...";
+        fetchBtn.disabled = true;
+        hideError();
+
+        try {
+            await loadLeagues();
+        } catch (err) {
+            // Token ist abgelaufen oder ungültig -> Zurück zum Login
+            token = "";
+            localStorage.removeItem("kb_token");
+            fetchBtn.textContent = "Daten abrufen";
+            fetchBtn.disabled = false;
+        }
+    }
+
+    async function loadLeagues() {
+        fetchBtn.textContent = "Lade Ligen...";
+        const leaguesRes = await apiCall("/leagues", "GET");
+        const leagues = leaguesRes.lins || [];
+        
+        const validLeagues = leagues.filter(l => !l.n.toLowerCase().includes("challenge"));
+        
+        if (validLeagues.length === 0) throw new Error("Keine passenden Ligen gefunden.");
+        
+        showLeagueSelection(validLeagues);
+    }
+
     async function apiCall(endpoint, method = "GET", body = null) {
         const headers = {
             "Accept": "application/json",
