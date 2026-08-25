@@ -122,7 +122,12 @@ document.addEventListener("DOMContentLoaded", () => {
         
         if (validLeagues.length === 0) throw new Error("Keine passenden Ligen gefunden.");
         
-        showLeagueSelection(validLeagues);
+        // Logik für automatischen Skip bei nur einer Liga
+        if (validLeagues.length === 1) {
+            await loadLeagueData(validLeagues[0].i, validLeagues[0].n);
+        } else {
+            showLeagueSelection(validLeagues);
+        }
     }
 
     async function apiCall(endpoint, method = "GET", body = null) {
@@ -156,6 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function loadLeagueData(leagueId, leagueName) {
+        loginSection.classList.add("hidden");
         leagueSection.classList.add("hidden");
         sellSet.clear();
         
@@ -190,6 +196,8 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (err) {
             showError("Fehler beim Laden des Kaders: " + err.message);
             leagueSection.classList.remove("hidden");
+            // Falls der Fehler passiert und es mehrere Ligen gibt, zurück zur Auswahl:
+            loginSection.classList.remove("hidden");
         }
     }
 
