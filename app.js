@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "41": { full: "VfL Bochum", short: "BOC" },
         "42": { full: "Holstein Kiel", short: "KIE" },
         "43": { full: "RB Leipzig", short: "RBL" },
-        "50": { full: "1. FC Heidenheim", short: "FCH" }
+        "50": { full: "1. FC Heidenheim", short: "FCH" },
         "77": { full: "SV Elversberg", short: "ELV" }        
     };
 
