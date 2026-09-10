@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const POSITIONS = { 1: "Tor", 2: "Abwehr", 3: "Mittelfeld", 4: "Sturm" };
 
     const TEAM_MAPPING = {
-        "1": { full: "FC Augsburg", short: "FCA" },
         "2": { full: "FC Bayern München", short: "FCB" },
         "3": { full: "Borussia Dortmund", short: "BVB" },
         "4": { full: "Eintracht Frankfurt", short: "SGE" },
