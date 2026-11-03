@@ -322,7 +322,7 @@ document.addEventListener("DOMContentLoaded", () => {
             realBudgetBonus
         });
 
-        // Standard Budgets im DOM updaten
+        // Standard Budgets im DOM updaten (mit Farbformatierung)
         document.getElementById("budget-current").textContent = formatCurrency(currentBudget);
         setColoredValue("budget-current", currentBudget);
         
@@ -332,15 +332,10 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("budget-bonus").textContent = formatCurrency(budgetAfterBonus);
         setColoredValue("budget-bonus", budgetAfterBonus);
 
-        // Erweiterte Budgets im DOM updaten
+        // Erweiterte Budgets im DOM updaten (ohne Farbformatierung, übernehmen Theme-Standardfarbe)
         document.getElementById("real-budget-current").textContent = formatCurrency(realBudgetCurrent);
-        setColoredValue("real-budget-current", realBudgetCurrent);
-
         document.getElementById("real-budget-transfers").textContent = formatCurrency(realBudgetTransfers);
-        setColoredValue("real-budget-transfers", realBudgetTransfers);
-
         document.getElementById("real-budget-bonus").textContent = formatCurrency(realBudgetBonus);
-        setColoredValue("real-budget-bonus", realBudgetBonus);
 
         const tfoot = document.getElementById("squad-footer");
         tfoot.innerHTML = `
