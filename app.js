@@ -307,9 +307,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
         expectedBonus += (daysToNextMatch * 100000);
 
+        // Bisherige Werte
         const budgetAfterTransfers = currentBudget + sellMv;
         const budgetAfterBonus = budgetAfterTransfers + expectedBonus;
 
+        // Hilfswert: Marktwert des Kaders NACH Transfers
+        const squadMvAfterTransfers = totalMv - sellMv;
+
+        // Neue Berechnungen für maximales Einkaufsbudget inkl. Kreditrahmen (1/3-Regel)
+        const realBudgetCurrent = Math.round((totalMv + currentBudget) * 0.33 + currentBudget);
+        const realBudgetTransfers = Math.round((squadMvAfterTransfers + budgetAfterTransfers) * 0.33 + budgetAfterTransfers);
+        const realBudgetBonus = Math.round((squadMvAfterTransfers + budgetAfterBonus) * 0.33 + budgetAfterBonus);
+
+        // Standard Budgets im DOM updaten
         document.getElementById("budget-current").textContent = formatCurrency(currentBudget);
         setColoredValue("budget-current", currentBudget);
         
@@ -318,6 +328,16 @@ document.addEventListener("DOMContentLoaded", () => {
         
         document.getElementById("budget-bonus").textContent = formatCurrency(budgetAfterBonus);
         setColoredValue("budget-bonus", budgetAfterBonus);
+
+        // Erweiterte Budgets im DOM updaten
+        document.getElementById("real-budget-current").textContent = formatCurrency(realBudgetCurrent);
+        setColoredValue("real-budget-current", realBudgetCurrent);
+
+        document.getElementById("real-budget-transfers").textContent = formatCurrency(realBudgetTransfers);
+        setColoredValue("real-budget-transfers", realBudgetTransfers);
+
+        document.getElementById("real-budget-bonus").textContent = formatCurrency(realBudgetBonus);
+        setColoredValue("real-budget-bonus", realBudgetBonus);
 
         const tfoot = document.getElementById("squad-footer");
         tfoot.innerHTML = `
