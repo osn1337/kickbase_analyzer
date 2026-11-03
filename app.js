@@ -56,7 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
         emailInput.value = savedEmail;
     }
 
-    // Wenn ein Token im Storage liegt, direkt den Auto-Login versuchen
     if (token) {
         performAutoLogin();
     }
@@ -75,7 +74,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const loginRes = await apiCall("/user/login", "POST", { em: email, pass: password });
             token = loginRes.tkn;
             
-            // Token und E-Mail für die nächste Session speichern
             localStorage.setItem("kb_token", token);
             localStorage.setItem("kb_email", email);
             
@@ -89,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     logoutBtn.addEventListener("click", () => {
         token = "";
-        localStorage.removeItem("kb_token"); // Token beim Logout vernichten
+        localStorage.removeItem("kb_token"); 
         dashboardSection.classList.add("hidden");
         loginSection.classList.remove("hidden");
         fetchBtn.textContent = "Daten abrufen";
@@ -105,7 +103,6 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             await loadLeagues();
         } catch (err) {
-            // Token ist abgelaufen oder ungültig -> Zurück zum Login
             token = "";
             localStorage.removeItem("kb_token");
             fetchBtn.textContent = "Daten abrufen";
@@ -122,7 +119,6 @@ document.addEventListener("DOMContentLoaded", () => {
         
         if (validLeagues.length === 0) throw new Error("Keine passenden Ligen gefunden.");
         
-        // Logik für automatischen Skip bei nur einer Liga
         if (validLeagues.length === 1) {
             await loadLeagueData(validLeagues[0].i, validLeagues[0].n);
         } else {
@@ -196,7 +192,6 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (err) {
             showError("Fehler beim Laden des Kaders: " + err.message);
             leagueSection.classList.remove("hidden");
-            // Falls der Fehler passiert und es mehrere Ligen gibt, zurück zur Auswahl:
             loginSection.classList.remove("hidden");
         }
     }
@@ -311,13 +306,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const budgetAfterTransfers = currentBudget + sellMv;
         const budgetAfterBonus = budgetAfterTransfers + expectedBonus;
 
-        // Hilfswert: Marktwert des Kaders NACH Transfers
+        // Echte Kickbase-Logik: Verfügbares Budget = Kontostand + (Kaderwert * 0.33)
         const squadMvAfterTransfers = totalMv - sellMv;
 
-        // Neue Berechnungen für maximales Einkaufsbudget inkl. Kreditrahmen (1/3-Regel)
-        const realBudgetCurrent = Math.round((totalMv + currentBudget) * 0.33 + currentBudget);
-        const realBudgetTransfers = Math.round((squadMvAfterTransfers + budgetAfterTransfers) * 0.33 + budgetAfterTransfers);
-        const realBudgetBonus = Math.round((squadMvAfterTransfers + budgetAfterBonus) * 0.33 + budgetAfterBonus);
+        const realBudgetCurrent = Math.floor(currentBudget + (totalMv * 0.33));
+        const realBudgetTransfers = Math.floor(budgetAfterTransfers + (squadMvAfterTransfers * 0.33));
+        const realBudgetBonus = Math.floor(budgetAfterBonus + (squadMvAfterTransfers * 0.33));
+
+        // Debug-Log für die F12 Konsole
+        console.log("Budget Update durchlaufen:", {
+            currentBudget,
+            totalMv,
+            realBudgetCurrent,
+            realBudgetTransfers,
+            realBudgetBonus
+        });
 
         // Standard Budgets im DOM updaten
         document.getElementById("budget-current").textContent = formatCurrency(currentBudget);
