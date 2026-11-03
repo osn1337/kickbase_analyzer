@@ -39,18 +39,36 @@
             </div>
 
             <!-- Finanzen / Budget -->
-            <div class="budget-panel card">
-                <div class="budget-box">
-                    <span class="label">Kontostand</span>
-                    <span id="budget-current" class="value">0 €</span>
+            <div class="card">
+                <!-- Standard Budgets -->
+                <div class="budget-panel" style="margin-bottom: 1rem;">
+                    <div class="budget-box">
+                        <span class="label">Kontostand</span>
+                        <span id="budget-current" class="value">0 €</span>
+                    </div>
+                    <div class="budget-box">
+                        <span class="label">Nach Transfers</span>
+                        <span id="budget-transfers" class="value">0 €</span>
+                    </div>
+                    <div class="budget-box">
+                        <span class="label">Nach Boni</span>
+                        <span id="budget-bonus" class="value">0 €</span>
+                    </div>
                 </div>
-                <div class="budget-box">
-                    <span class="label">Nach Transfers</span>
-                    <span id="budget-transfers" class="value">0 €</span>
-                </div>
-                <div class="budget-box">
-                    <span class="label">Nach Boni</span>
-                    <span id="budget-bonus" class="value">0 €</span>
+                <!-- Erweiterte reale Budgets (max. Gebot) -->
+                <div class="budget-panel">
+                    <div class="budget-box">
+                        <span class="label">Budget aktuell</span>
+                        <span id="real-budget-current" class="value">0 €</span>
+                    </div>
+                    <div class="budget-box">
+                        <span class="label">Budget nach Transfers</span>
+                        <span id="real-budget-transfers" class="value">0 €</span>
+                    </div>
+                    <div class="budget-box">
+                        <span class="label">Budget nach Boni</span>
+                        <span id="real-budget-bonus" class="value">0 €</span>
+                    </div>
                 </div>
             </div>
 
@@ -79,6 +97,6 @@
         </div>
     </div>
     <!-- Cache-Buster hinzugefügt: Zwingt den Browser, das frische JS zu laden -->
-    <script src="app.js?v=2"></script>
+    <script src="app.js?v=3"></script>
 </body>
 </html>
