@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Goddys Kickbase Analyzer</title>
-    <!-- Cache-Buster hinzugefügt: Zwingt den Browser, das frische CSS zu laden -->
-    <link rel="stylesheet" href="style.css?v=4">
+    <!-- Cache-Buster auf v6 -->
+    <link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
     <div class="container">
@@ -24,13 +24,13 @@
             <p id="error-message" class="error hidden"></p>
         </div>
 
-        <!-- League Selection (Hidden initially) -->
+        <!-- League Selection -->
         <div id="league-section" class="card hidden">
             <h2>Liga auswählen</h2>
             <div id="league-buttons" class="button-group"></div>
         </div>
 
-        <!-- Dashboard UI (Hidden until successful data fetch) -->
+        <!-- Dashboard UI -->
         <div id="dashboard-section" class="hidden">
             <div class="header-info card">
                 <h2 id="league-name">Kaderübersicht</h2>
@@ -96,7 +96,7 @@
             <button id="logout-btn" class="secondary-btn mt-4">Zurück zum Login</button>
         </div>
     </div>
-    <!-- Cache-Buster hinzugefügt: Zwingt den Browser, das frische JS zu laden -->
-    <script src="app.js?v=3"></script>
+    <!-- Cache-Buster auf v6 -->
+    <script src="app.js?v=6"></script>
 </body>
 </html>
